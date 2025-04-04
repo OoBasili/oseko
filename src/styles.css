@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+}
+
+#canvas-container {
+  height: 100vh;
+}
+
+canvas {
+  background: rgb(122,47,243);
+  background: linear-gradient(60deg, rgba(122,47,243) 2%, rgba(255,107,28) 50%, rgba(252,176,69) 98%);
+}
