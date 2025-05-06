@@ -1,10 +1,13 @@
 import React from 'react';
 import * as THREE from 'three';
-
-import { Edges } from '@react-three/drei';
-import { CUBE_SIZE, MATRIX_DELTA, Point2, PointValue } from './types';
-import { getMatrixColumnsNumber } from './common/matrix';
 import { useFrame } from '@react-three/fiber';
+import { Edges } from '@react-three/drei';
+
+import { type PointValue, type Point2, CUBE_SIZE, MATRIX_DELTA, OColor } from './types';
+import { getMatrixColumnsNumber } from './common/matrix';
+
+import vertexShader from './assets/shaders/shader.vert?raw';
+import fragmentShader from './assets/shaders/shader.frag?raw';
 
 interface InstanceProps {
   matrix: number[][];
@@ -70,45 +73,7 @@ export const CubeInstances = (props: InstanceProps) => {
   return (
     <group>
       <instancedMesh ref={instancedMeshRef} args={[CUBE, undefined, count]}>
-        <shaderMaterial
-          vertexShader={`
-          attribute float brightness;
-          varying float vBrightness;
-          varying vec3 vNormal;
-          
-          void main() {
-            vBrightness = brightness;
-            vNormal = normal;
-            gl_Position = projectionMatrix * modelViewMatrix * instanceMatrix * vec4(position, 1.0);
-          }
-        `}
-          fragmentShader={`
-          varying float vBrightness;
-          varying vec3 vNormal;
-          
-          void main() {
-            vec3 absNormal = abs(vNormal);
-            
-            vec3 baseColor;
-            if (absNormal.x > 0.99 && vNormal.x > 0.0) {
-              baseColor = vec3(1, 0.0, 0.0);
-            } else if (absNormal.x > 0.99 && vNormal.x < 0.0) {
-              baseColor = vec3(0.0, 1, 0.0);
-            } else if (absNormal.y > 0.99 && vNormal.y > 0.0) {
-              baseColor = vec3(0.0, 0.0, 1);
-            } else if (absNormal.y > 0.99 && vNormal.y < 0.0) {
-              baseColor = vec3(1, 1, 0.0);
-            } else if (absNormal.z > 0.99 && vNormal.z > 0.0) {
-              baseColor = vec3(1, 0.0, 1);
-            } else {
-              baseColor = vec3(0.0, 1, 1);
-            }
-            
-            vec3 finalColor = baseColor * vBrightness;
-            gl_FragColor = vec4(clamp(finalColor, 0.0, 1.0), 1.0);
-          }
-        `}
-        />
+        <shaderMaterial vertexShader={vertexShader} fragmentShader={fragmentShader} />
       </instancedMesh>
       <group>
         {props.matrix.map((line, y) =>
@@ -159,15 +124,15 @@ function getMatrixOffset(matrix: number[][], vertical = true) {
 
 function getRotation(number: number): THREE.EulerTuple {
   switch (number) {
-    case 0:
+    case OColor.Cyan:
       return [Math.PI / 2, 0, 0];
-    case 1:
+    case OColor.Yellow:
       return [-Math.PI / 2, 0, 0];
-    case 2:
+    case OColor.Blue:
       return [0, Math.PI / 2, 0];
-    case 3:
+    case OColor.Red:
       return [0, -Math.PI / 2, 0];
-    case 4:
+    case OColor.Pink:
       return [0, 0, 0];
     default:
       return [0, Math.PI, 0];

@@ -1,9 +1,10 @@
 import React from 'react';
+import { useKeyboardControls } from '@react-three/drei';
+import { useThree } from '@react-three/fiber';
+
 import { findGroups, getRandomMatrix, increaseMatrix, rerollMatrix } from './common/matrix';
 import { CubeInstances } from './cube';
-import { useKeyboardControls } from '@react-three/drei';
-import { Control, CUBE_SIZE, MATRIX_DELTA, PointValue } from './types';
-import { useThree } from '@react-three/fiber';
+import { type Control, type PointValue, CUBE_SIZE, MATRIX_DELTA } from './types';
 
 export const Cubes = () => {
   const [matrix, setMatrix] = React.useState(getRandomMatrix(5));

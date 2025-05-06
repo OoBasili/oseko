@@ -4,14 +4,14 @@ import React from 'react';
 
 import './styles.css';
 import { Cubes } from './cubes';
-import { Control } from './types';
+import { type Control, OControl } from './types';
 
 export const MainCanvas = () => {
   const map = React.useMemo<KeyboardControlsEntry<Control>[]>(
     () => [
-      { name: Control.Space, keys: [Control.Space] },
-      { name: Control.ArrowUp, keys: [Control.ArrowUp] },
-      { name: Control.ArrowDown, keys: [Control.ArrowDown] },
+      { name: OControl.Space, keys: [OControl.Space] },
+      { name: OControl.ArrowUp, keys: [OControl.ArrowUp] },
+      { name: OControl.ArrowDown, keys: [OControl.ArrowDown] },
     ],
     []
   );

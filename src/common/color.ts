@@ -42,7 +42,7 @@ function blue(color: number): number {
   return color & 0xff;
 }
 
-export function hsv2rgb(h: number, s: number, v: number): number[] {
+function hsv2rgb(h: number, s: number, v: number): number[] {
   let [r, g, b] = [Number.NaN, Number.NaN, Number.NaN];
 
   const hh = h >= 360 ? 0 : h / 60;

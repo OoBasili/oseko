@@ -1,4 +1,4 @@
-import { PointValue } from '../types';
+import type { PointValue } from '../types';
 import { getRandomArray, getRandomNumber, increaseLine } from './math';
 
 export function rerollMatrix(matrix: number[][], fixed: number[]) {
@@ -8,11 +8,7 @@ export function rerollMatrix(matrix: number[][], fixed: number[]) {
 export function increaseMatrix(matrix: number[][], step = 1) {
   const newMatrix = matrix.map((line) => increaseLine(line, step));
   const cols = getMatrixColumnsNumber(newMatrix);
-  return [
-    ...Array<number[]>(step).fill(getRandomArray(cols)),
-    ...newMatrix,
-    ...Array<number[]>(step).fill(getRandomArray(cols)),
-  ];
+  return [...getRandomMatrix(step, cols), ...newMatrix, ...getRandomMatrix(step, cols)];
 }
 
 export function getRandomMatrix(rows: number, cols = rows) {

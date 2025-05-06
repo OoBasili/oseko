@@ -9,9 +9,9 @@ export function getRandomNumber() {
 export function getRandomArray(width: number) {
   const random = new Uint8Array(width);
   globalThis.crypto.getRandomValues(random);
-  return Array.from(random.map(convertUint8));
+  return [...random.map(convertUint8)];
 }
 
-export function convertUint8(value: number) {
+function convertUint8(value: number) {
   return Math.floor((value / 256) * 6);
 }
